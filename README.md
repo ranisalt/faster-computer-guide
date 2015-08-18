@@ -26,7 +26,7 @@ If you followed the guide religiously up to here, you are ready to dig into more
   ```
 
 - **Optimize your initrd**. On Arch Linux, you can modify */etc/mkinitcpio.conf* and it is very well documented and I intend to have a deeply optimized example soon, but you can change the *COMPRESSION* to *cat* on SSD to generate a larger initrd in favor of faster (instant) decompression, a fine trade-off around 10 times faster than gzip. On other distros, refer to the official guides and manuals.
-- **Use [profile-sync-daemon](https://wiki.archlinux.org/index.php/Profile-sync-daemon)**. It is a great tool by the great @graysky to manage your browser profile on tmpfs, and it both increases performance and reduces disk wear. Please note that it takes some time to start on boot, up to a couple of seconds.
+- **Use [profile-sync-daemon](https://wiki.archlinux.org/index.php/Profile-sync-daemon)**. It is a great tool by the great [@graysky2](https://github.com/graysky2) to manage your browser profile on tmpfs, and it both increases performance and reduces disk wear. Please note that it takes some time to start on boot, up to a couple of seconds.
 - **Replace bash by dash on boot**. This is a tricky one. **dash** is a very slim alternative to **bash** and it can be used on boot to shave off some milliseconds. You need to redirect */usr/bin/sh* to */usr/bin/dash* if it was linked to bash. Check it first:
 
   ```bash
