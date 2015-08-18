@@ -13,24 +13,34 @@ If you followed the guide religiously up to here, you are ready to dig into more
 
 ## Finer system tuning
 - **Decrease output during boot**. Your system might spit out a ton of information during boot, but really it's too much and too fast to care. Go to your bootloader configuration (Google it) and append the following to the kernel command line:
-  `quiet loglevel=3 splash`
+
+  ```
+  quiet loglevel=3 splash
+  ```
+
   It removes most of the messages and sets the log level to display only error messages. You can read the boot output later using *dmesg* and *journalctl*.
 - **Finer tuning of _/etc/fstab_**. First of all, you can use the *noatime* option on ext filesystems to prevent updating access time of files, thus not writing to the disk every time you touch a file (although *touch* still works). You can also specify *discard* on SSD partitions to activate TRIM (Google it), and *commit=60* on SSD to sync to disk less frequently. For example, the full line for my */* partition:
+
   ```
   /dev/sdb3	/	ext4	discard,noatime,commit=60	0	0
   ```
+
 - **Optimize your initrd**. On Arch Linux, you can modify */etc/mkinitcpio.conf* and it is very well documented and I intend to have a deeply optimized example soon, but you can change the *COMPRESSION* to *cat* on SSD to generate a larger initrd in favor of faster (instant) decompression, a fine trade-off around 10 times faster than gzip. On other distros, refer to the official guides and manuals.
 - **Use [profile-sync-daemon](https://wiki.archlinux.org/index.php/Profile-sync-daemon)**. It is a great tool by the great @graysky to manage your browser profile on tmpfs, and it both increases performance and reduces disk wear. Please note that it takes some time to start on boot, up to a couple of seconds.
 - **Replace bash by dash on boot**. This is a tricky one. **dash** is a very slim alternative to **bash** and it can be used on boot to shave off some milliseconds. You need to redirect */usr/bin/sh* to */usr/bin/dash* if it was linked to bash. Check it first:
+
   ```bash
   $ ls -og /usr/bin/sh
   lrwxrwxrwx 1 4 Aug 14 03:03 /usr/bin/sh -> bash
   ```
+
   So yes, it was linking bash. Go to */usr/bin* and change it:
+
   ```bash
   $ cd /usr/bin
   $ ln -s dash sh
   ```
+
   And you are good to go. Just remeber to update your scripts if they rely heavily on bash and are configured to use */usr/bin/sh*.
 
 There's more to come.
