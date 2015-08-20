@@ -1,5 +1,27 @@
 # ranisalt's guide to a faster computer
 
+First of all, take your time to measure the bottlenecks. You can check if your boot time is reasonable with the `systemd-analyze` tool:
+
+```bash
+$ systemd-analyze
+Startup finished in 3.481s (firmware) + 1.166s (loader) + 924ms (kernel) + 1.891s (userspace) = 7.464s
+```
+
+And you can go deeper and check what takes most time to load from userspace passing the parameter `blame`:
+
+```bash
+$ systemd-analyze blame
+           879ms psd-resync.service
+           601ms docker.service
+           319ms psd.service
+           285ms dev-sdb3.device
+           277ms wicd.service
+           276ms user@1000.service
+           135ms dev-sda2.swap
+            86ms systemd-journald.service
+(...)
+```
+
 ## General recommendations
 - **Disable unnecessary services**. You can check what are the major hogs with *systemd-analyze blame*, and it will list processes taking boot time, sorted by heavier first. Then, mask them with *systemctl mask <unit name>* and you're ready, and *systemctl unmask <unit name>* if something goes wrong. You will look forward to disabling Bluetooth, infrared, and even firewalls if you are not concerned with it.
 - **Use a lighter display manager**. **SLiM** is always a good option, **LightDM** is good too. You can also go with no DM at all, shaving off precious time. If your distro comes with, consider disabling Plymouth too (we're goind FAST, not EYE-CANDY).
