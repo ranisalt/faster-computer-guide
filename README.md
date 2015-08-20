@@ -26,7 +26,14 @@ If you followed the guide religiously up to here, you are ready to dig into more
   ```
 
 - **Optimize your initrd**. On Arch Linux, you can modify */etc/mkinitcpio.conf* and it is very well documented and I intend to have a deeply optimized example soon, but you can change the *COMPRESSION* to *cat* on SSD to generate a larger initrd in favor of faster (instant) decompression, a fine trade-off around 10 times faster than gzip. On other distros, refer to the official guides and manuals.
-- **Use [profile-sync-daemon](https://wiki.archlinux.org/index.php/Profile-sync-daemon)**. It is a great tool by [@graysky2](https://github.com/graysky2) to manage your browser profile on tmpfs, and it both increases performance and reduces disk wear. If supported, use it in "overlayfs" mode to minimize sync delays.
+- **Use [profile-sync-daemon](https://wiki.archlinux.org/index.php/Profile-sync-daemon)**. It is a great tool by [@graysky2](https://github.com/graysky2) to manage your browser profile on tmpfs, and it both increases performance and reduces disk wear. If supported, use it in "overlayfs" mode to minimize sync delay. To check if your system supports it, run:
+
+  ```bash
+  $ zgrep OVERLAY /proc/config.gz
+  ```
+
+  And it should output either `CONFIG_OVERLAY_FS=m` or `CONFIG_OVERLAY_FS=y`, else you need to recompile your kernel. Then, edit */etc/psd.conf* and uncomment `USE_OVERLAYFS="yes"`. Reboot and check.
+
 - **Replace bash by dash on boot**. This is a tricky one. **dash** is a very slim alternative to **bash** and it can be used on boot to shave off some milliseconds. You need to redirect */usr/bin/sh* to */usr/bin/dash* if it was linked to bash. Check it first:
 
   ```bash
