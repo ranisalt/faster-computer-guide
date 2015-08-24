@@ -55,7 +55,7 @@ If you followed the guide religiously up to here, you are ready to dig into more
   ACTION=="add|change", KERNEL=="sdb", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="<scheduler>"
   ```
 
-  Replacing `sdb` with your disk (you can get its name with *lsblk*) and `<scheduler>` with your favorite scheduler. You can also replace the disk scheduler on boot, in which case there will be less overhead on boot times, adding the following to your kernel command line (like in the previous tip):
+  Replacing `sdb` with your disk (you can get its name with *lsblk*) and `<scheduler>` with your favorite scheduler (e.g. [my configuration](https://github.com/ranisalt/dotfiles/blob/master/etc/udev/rules.d/60-schedulers.rules). You can also replace the disk scheduler on boot, in which case there will be less overhead on boot times, adding the following to your kernel command line (like in the previous tip):
 
   ```
   elevator=<scheduler>
