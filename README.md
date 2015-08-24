@@ -47,6 +47,22 @@ If you followed the guide religiously up to here, you are ready to dig into more
   ```
 
   It removes most of the messages and sets the log level to display only error messages. You can read the boot output later using *dmesg* and *journalctl*.
+
+- **Use faster disk schedulers**. If you have a SSD, you can change the scheduler since the default one, CFQ, accounts for seek time of HDDs, which do not exist on SSD. I recommend the **deadline** scheduler, but the **noop** scheduler can be faster, especially on boot. To configure it, first create the file */etc/udev.d/60-scheduler.rules* and insert:
+
+  ```
+  # set deadline scheduler for non-rotating disks
+  ACTION=="add|change", KERNEL=="sdb", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="<scheduler>"
+  ```
+
+  Replacing `sdb` with your disk (you can get its name with *lsblk*) and `<scheduler>` with your favorite scheduler. You can also replace the disk scheduler on boot, in which case there will be less overhead on boot times, adding the following to your kernel command line (like in the previous tip):
+
+  ```
+  elevator=<scheduler>
+  ```
+
+  Replacing accordingly.
+
 - **Finer tuning of _/etc/fstab_**. First of all, you can use the *noatime* option on ext filesystems to prevent updating access time of files, thus not writing to the disk every time you touch a file (although *touch* still works). You can also specify *discard* on SSD partitions to activate TRIM (Google it), and *commit=60* on SSD to sync to disk less frequently. For example, the full line for my */* partition:
 
   ```
