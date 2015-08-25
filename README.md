@@ -103,6 +103,19 @@ If you followed the guide religiously up to here, you are ready to dig into more
 
   And you are good to go. Just remeber to update your scripts if they rely heavily on bash and are configured to use */usr/bin/sh*.
 
+- **Avoid swapping (or disable at all)**. Swap is a major bottleneck. You will not want to have it on SSD since it will wear out your SSD, and use a too big space if you have a small SSD like me, but HDD is very slow and when your system starts thrashing, it'll feel like hell.
+
+  Create a file under */etc/sysctl.d* named *99-swappiness.conf* and add the following:
+
+  ```
+  # Do less swapping
+  vm.dirty_ratio = 6
+  vm.dirty_background_ratio = 3
+  vm.dirty_writeback_centisecs = 1500
+  ```
+
+  Those configurations are responsible for controlling how often the kernel swaps ([documentation](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/sysctl/vm.txt)), I use them on a 6 GB system with a 8 GB swap partition and this is a good value. [Here's a good article on how swappiness works](https://rudd-o.com/linux-and-free-software/tales-from-responsivenessland-why-linux-feels-slow-and-how-to-fix-that), I recommend the reading.
+
 There's more to come.
 
 ## License
