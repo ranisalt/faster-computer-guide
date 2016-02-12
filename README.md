@@ -4,7 +4,7 @@ First of all, take your time to measure the bottlenecks. You can check if your b
 
 ```bash
 $ systemd-analyze
-Startup finished in 3.481s (firmware) + 1.166s (loader) + 924ms (kernel) + 1.891s (userspace) = 7.464s
+Startup finished in 3.104s (firmware) + 50ms (loader) + 914ms (kernel) + 1.409s (userspace) = 5.479s
 ```
 
 And you can go deeper and check what takes most time to load from userspace passing the parameter `blame`:
