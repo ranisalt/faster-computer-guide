@@ -27,7 +27,7 @@ $ systemd-analyze blame
 
 ---
 
-- **Use a lighter display manager**. **SLiM** is always a good option, **LightDM** is good too. You can also go with no DM at all, shaving off precious time. If your distro comes with, consider disabling Plymouth too (we're goind FAST, not EYE-CANDY).
+- **Use a lighter display manager**. **SLiM** is always a good option, **LightDM** is good too. You can also go with no DM at all, shaving off precious time. If your distro comes with, consider disabling Plymouth too (we're going FAST, not EYE-CANDY).
 
 ---
 
