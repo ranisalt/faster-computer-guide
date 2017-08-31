@@ -75,7 +75,7 @@ If you followed the guide religiously up to here, you are ready to dig into more
   elevator=<scheduler>
   ```
 
-  Replacing accordingly.
+  [This post](https://bbs.archlinux.org/viewtopic.php?id=123427) has some benchmarks with **cfq**, **deadline** and **noop** and concludes native SATA queueing (called NCQ) probably does a slightly better job than kernel schedulers, so **noop** might have the best throughput. Replacing accordingly.
 
 ---
 
